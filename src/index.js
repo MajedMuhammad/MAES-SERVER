@@ -3,12 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
+// const eSRoutes = require('routes/eSRoutes');
 const requireAuth = require('./middlewares/requireAuth');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(authRoutes);
+// app.io.use(eSRoutes);
 
 const mongoUri = 'mongodb+srv://admin:admin@cluster.tdizh.mongodb.net/userDatabase?retryWrites=true&w=majority';
 if (!mongoUri) {
@@ -18,7 +20,8 @@ if (!mongoUri) {
 }
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useUnifiedTopology: true
 });
 mongoose.connection.on('connected', () => {
   console.log('Connected to mongo instance');
